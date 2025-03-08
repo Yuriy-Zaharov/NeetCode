@@ -127,29 +127,23 @@ public class Solution {
      * @return [2,3]
      */
     public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> numsFreq = new HashMap<>();
-
+        Map<Integer, Integer> count = new HashMap<>();
         for (int num : nums) {
-            numsFreq.putIfAbsent(num, 0);
-            numsFreq.put(num, numsFreq.get(num) + 1);
+            count.put(num, count.getOrDefault(num, 0) + 1);
         }
-        int[][] numsFreqArray = new int[numsFreq.size()][2];
-        try {
-            int i = 0;
-            for (int num : numsFreq.keySet()) {
-                numsFreqArray[i][0] = num;
-                numsFreqArray[i][1] = numsFreq.get(num);
-                i++;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Arrays.sort(numsFreqArray, Comparator.comparingInt(o -> -o[1]));
 
-        int[] result = new int[k];
-        for (int i = 0; i < k; i++) {
-            result[i] = numsFreqArray[i][0];
+        PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
+            heap.offer(new int[]{entry.getValue(), entry.getKey()});
+            if (heap.size() > k) {
+                heap.poll();
+            }
         }
-        return result;
+
+        int[] res = new int[k];
+        for (int i = 0; i < k; i++) {
+            res[i] = heap.poll()[1];
+        }
+        return res;
     }
 }
