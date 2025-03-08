@@ -122,8 +122,8 @@ public class Solution {
     /**
      * Given an integer array nums and an integer k, return the k most frequent elements within the array.
      * The test cases are generated such that the answer is always unique.
-     * @param nums [1,2,2,3,3,3]
-     * @param k 2
+     * @param nums integer array
+     * @param k integer
      * @return [2,3]
      */
     public int[] topKFrequent(int[] nums, int k) {
@@ -132,7 +132,7 @@ public class Solution {
             count.put(num, count.getOrDefault(num, 0) + 1);
         }
 
-        PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        PriorityQueue<int[]> heap = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
         for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
             heap.offer(new int[]{entry.getValue(), entry.getKey()});
             if (heap.size() > k) {
