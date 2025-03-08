@@ -38,6 +38,12 @@ public class Solution {
         return Arrays.equals(sChar, tChar);
     }
 
+    /**
+     * Given two strings s and t, return true if the two strings are anagrams of each other, otherwise return false.
+     * @param s String 1
+     * @param t String 2
+     * @return true/false
+     */
     public boolean isAnagramHashMap(String s, String t) {
         if (s.length() != t.length()) { return false; }
 
@@ -52,6 +58,12 @@ public class Solution {
         return sHashMap.equals(tHashMap);
     }
 
+    /**
+     * Given two strings s and t, return true if the two strings are anagrams of each other, otherwise return false.
+     * @param s String 1
+     * @param t String 2
+     * @return true/false
+     */
     public boolean isAnagramArrayOptimal(String s, String t) {
         if (s.length() != t.length()) {
             return false;
@@ -69,5 +81,25 @@ public class Solution {
             }
         }
         return true;
+    }
+
+    /**
+     * Given an array of integers nums and an integer target,
+     * return the indices i and j such that nums[i] + nums[j] == target and i != j.
+     * @param nums array of integers
+     * @param target target int
+     * @return [i, j] indices i and j such that nums[i] + nums[j] == target and i != j
+     */
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> hashMapNums = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (hashMapNums.containsKey(target - nums[i])) {
+                return new int[]{hashMapNums.get(target - nums[i]), i};
+            }
+            else {
+                hashMapNums.put(nums[i], i);
+            }
+        }
+        return new int[] {};
     }
 }
