@@ -1,8 +1,6 @@
 package Arrays_Hashing;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Solution {
     /**
@@ -101,5 +99,25 @@ public class Solution {
             }
         }
         return new int[] {};
+    }
+
+    /**
+     * Given an array of strings strs, group all anagrams together into sublists.
+     * You may return the output in any order.
+     * @param strs ["act","pots","tops","cat","stop","hat"]
+     * @return [["hat"],["act", "cat"],["stop", "pots", "tops"]]
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> res = new HashMap<>();
+        for (String s : strs) {
+            int[] count = new int[26];
+            for (char c : s.toCharArray()) {
+                count[c - 'a']++;
+            }
+            String key = Arrays.toString(count);
+            res.putIfAbsent(key, new ArrayList<>());
+            res.get(key).add(s);
+        }
+        return new ArrayList<>(res.values());
     }
 }
