@@ -110,14 +110,46 @@ public class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> res = new HashMap<>();
         for (String s : strs) {
-            int[] count = new int[26];
-            for (char c : s.toCharArray()) {
-                count[c - 'a']++;
-            }
-            String key = Arrays.toString(count);
-            res.putIfAbsent(key, new ArrayList<>());
-            res.get(key).add(s);
+            char[] charArray = s.toCharArray();
+            Arrays.sort(charArray);
+            String sortedS = new String(charArray);
+            res.putIfAbsent(sortedS, new ArrayList<>());
+            res.get(sortedS).add(s);
         }
         return new ArrayList<>(res.values());
+    }
+
+    /**
+     * Given an integer array nums and an integer k, return the k most frequent elements within the array.
+     * The test cases are generated such that the answer is always unique.
+     * @param nums [1,2,2,3,3,3]
+     * @param k 2
+     * @return [2,3]
+     */
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> numsFreq = new HashMap<>();
+
+        for (int num : nums) {
+            numsFreq.putIfAbsent(num, 0);
+            numsFreq.put(num, numsFreq.get(num) + 1);
+        }
+        int[][] numsFreqArray = new int[numsFreq.size()][2];
+        try {
+            int i = 0;
+            for (int num : numsFreq.keySet()) {
+                numsFreqArray[i][0] = num;
+                numsFreqArray[i][1] = numsFreq.get(num);
+                i++;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Arrays.sort(numsFreqArray, Comparator.comparingInt(o -> -o[1]));
+
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = numsFreqArray[i][0];
+        }
+        return result;
     }
 }
