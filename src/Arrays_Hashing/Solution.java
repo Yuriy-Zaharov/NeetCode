@@ -146,4 +146,32 @@ public class Solution {
         }
         return res;
     }
+
+    /**
+     * Encode a list of strings to a single string. Delimiter is Length# (24#).
+     * @param strs ["Aboba", "Biba"]
+     * @return "5#Aboba4#Biba
+     */
+    public String encode(List<String> strs) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : strs) {
+            sb.append(s.length()).append("#").append(s);
+        }
+        return sb.toString();
+    }
+
+    public List<String> decode(String str) {
+        List<String> res = new ArrayList<>();
+        char[] chars = str.toCharArray();
+        int startIndex = 0;
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '#') {
+                int strLength = Integer.parseInt(String.valueOf(chars, startIndex, i - startIndex));
+                res.add(str.substring(i + 1, i + strLength + 1));
+                i += strLength;
+                startIndex = i + 1;
+            }
+        }
+        return res;
+    }
 }
