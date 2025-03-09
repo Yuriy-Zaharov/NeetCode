@@ -174,4 +174,28 @@ public class Solution {
         }
         return res;
     }
+
+    /**
+     * Given an integer array nums, return an array output where output[i] is the product
+     * of all the elements of nums except nums[i].
+     * @param nums
+     * @return array int of products nums except nums[i]
+     */
+    public int[] productExceptSelf(int[] nums) {
+        int[] res = new int[nums.length];
+        res[0] = 1;
+        int pref = 1;
+        int post = 1;
+        for (int i = 1; i < nums.length; i++) {
+            pref *= nums[i - 1];
+            res[i] = pref;
+        }
+
+        for (int i = nums.length - 2; i > -1; i--) {
+            post *= nums[i + 1];
+            res[i] = res[i] * post;
+        }
+
+        return res;
+    }
 }
