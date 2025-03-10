@@ -198,4 +198,57 @@ public class Solution {
 
         return res;
     }
+
+    /**
+     * Return true if the Sudoku board is valid, otherwise return false.
+     * @param board Matrix of Sudoku board. Empty cell is '.'
+     *     board =
+     * [["1","2",".",".","3",".",".",".","."],
+     *  ["4",".",".","5",".",".",".",".","."],
+     *  [".","9","8",".",".",".",".",".","3"],
+     *  ["5",".",".",".","6",".",".",".","4"],
+     *  [".",".",".","8",".","3",".",".","5"],
+     *  ["7",".",".",".","2",".",".",".","6"],
+     *  [".",".",".",".",".",".","2",".","."],
+     *  [".",".",".","4","1","9",".",".","8"],
+     *  [".",".",".",".","8",".",".","7","9"]]
+     * @return true if valid, otherwise false
+     */
+    public boolean isValidSudoku(char[][] board) {
+        for (int i = 0; i < 9; i++) {
+            Set<Character> rowSet = new HashSet<>();
+            Set<Character> colSet = new HashSet<>();
+
+            for (int j = 0; j < 9; j++) {
+
+                if (board[i][j] != '.')
+                    if (rowSet.contains(board[i][j]))
+                        return false;
+
+                if (board[j][i] != '.')
+                    if (colSet.contains(board[j][i]))
+                        return false;
+
+                rowSet.add(board[i][j]);
+                colSet.add(board[j][i]);
+            }
+        }
+        for (int rowStep = 0; rowStep < 9; rowStep += 3) {
+            for (int colStep = 0; colStep < 9; colStep += 3) {
+
+                Set<Character> boxSet = new HashSet<>();
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (board[rowStep + i][colStep + j] == '.')
+                            continue;
+                        if (boxSet.contains(board[rowStep + i][colStep + j]))
+                            return false;
+                        boxSet.add(board[rowStep + i][colStep + j]);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 }
