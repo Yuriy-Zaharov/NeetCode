@@ -1,6 +1,7 @@
 package Arrays_Hashing;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution {
     /**
@@ -248,7 +249,36 @@ public class Solution {
                 }
             }
         }
-
         return true;
+    }
+
+    /**
+     * Given an array of integers nums,
+     * return the length of the longest consecutive sequence of elements that can be formed.
+     * _
+     * A consecutive sequence is a sequence of elements in which each element is exactly 1 greater
+     * than the previous element. The elements do not have to be consecutive in the original array.
+     * @param nums array of integers
+     * @return length of the longest consecutive sequence
+     */
+    public int longestConsecutive(int[] nums) {
+        int longest = 0;
+        HashSet<Integer> numsSet = (HashSet<Integer>) Arrays.stream(nums)
+                .boxed()
+                .collect(Collectors.toSet());
+
+        for (int num : numsSet) {
+            if (!numsSet.contains(num - 1)) {
+                int currentLength = 1;
+                int currentNum = num;
+                while (numsSet.contains(currentNum + 1)) {
+                    currentNum++;
+                    currentLength++;
+                }
+                longest = Math.max(currentLength, longest);
+            }
+        }
+
+        return longest;
     }
 }
