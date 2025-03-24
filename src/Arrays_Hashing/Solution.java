@@ -99,7 +99,7 @@ public class Solution {
                 hashMapNums.put(nums[i], i);
             }
         }
-        return new int[] {};
+        return null;
     }
 
     /**
