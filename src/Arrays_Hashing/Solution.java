@@ -196,7 +196,6 @@ public class Solution {
             post *= nums[i + 1];
             res[i] = res[i] * post;
         }
-
         return res;
     }
 
